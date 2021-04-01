@@ -29,9 +29,9 @@ sumarizex(LA,[X|R],[X|W],[Y|W2]) :- cont(X,[X|R],Y), sumarizex([X|LA], R, W, W2)
 
 sumarize(L,L1,L2) :- sumarizex([],L,L1,L2).
 
-make(V,[X],[X],[]) :- V=:=X, !.
+make(V,[X],[X],[]) :- V==X, !.
 make(_,[X],[],[X]) :- !.
-make(V,[X|R],[X|W],L) :- V=:=X, make(V,R,W,L), !.
+make(V,[X|R],[X|W],L) :- V==X, make(V,R,W,L), !.
 make(_, L, [], L).
 
 empacote([],[]) :- !.
