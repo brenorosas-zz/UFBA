@@ -25,7 +25,7 @@ inverter([X|R], W) :- inverter(R,L), adicionarFinal(X,L,W).
 
 %7
 inverterLG([], []) :- !.
-inverterLG([X|R], K) :- is_list(X), inverterLG(X,W), adicionarFinal(W,R,K), !.
+inverterLG([X|R], K) :- is_list(X), inverterLG(X,W), inverterLG(R,Z), adicionarFinal(W,Z,K), !.
 inverterLG([X|R], K) :- inverterLG(R,W), adicionarFinal(X,W,K).
 
 %8
