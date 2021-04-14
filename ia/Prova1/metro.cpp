@@ -34,12 +34,23 @@ vector<int> path(vector<int> p)
 }
 map<pair<int, int>, string> linha;
 vector<int> levi;
+bool exist(vector<int> &vet, int x)
+{
+    for (int &i : vet)
+    {
+        if (i == x)
+        {
+            return true;
+        }
+    }
+    return false;
+}
 vector<int> A_star()
 {
     vector<int> vinicius;
     vector<double> mendist(15, INF);
-    set<int> q;
-    q.insert(s);
+    set<pair<int, string>> q;
+    q.insert({s, "neutro"});
     vector<int> p(15);
     vector<double> score(15, INF);
     mendist[s] = 0;
@@ -48,36 +59,39 @@ vector<int> A_star()
     {
         double menor = 1e9 + 50;
         int v;
+        string cor;
         for (auto &i : q)
         {
-            if (score[i] < menor)
+            if (score[i.first] < menor)
             {
-                menor = score[i];
-                v = i;
+                menor = score[i.first];
+                v = i.first;
+                cor = i.second;
             }
         }
-        levi.push_back(v);
+        if (!exist(levi, v))
+            levi.push_back(v);
         if (v == t)
         {
             return path(p);
         }
-        q.erase(v);
+        q.erase({v, cor});
         for (auto edge : adj[v])
         {
             int to = edge.first;
-            double len = edge.second + mendist[v];
-            // if (linha[{v, to}] != cor and cor != "neutro")
-            // {
-            //     len += bald;
-            // }
+            double len = edge.second * 60.0 / velo + mendist[v];
+            if (linha[{v, to}] != cor and cor != "neutro")
+            {
+                len += bald;
+            }
             if (len < mendist[to])
             {
                 p[to] = v;
                 mendist[to] = len;
                 score[to] = mendist[to] + h[to];
-                if (!q.count(to))
+                if (!q.count({to, linha[{v, to}]}))
                 {
-                    q.insert(to);
+                    q.insert({to, linha[{v, to}]});
                 }
             }
         }
@@ -86,7 +100,7 @@ vector<int> A_star()
 }
 void cost(int i, double pi)
 {
-    h[i] = dist[i - 1][t - 1];
+    h[i] = dist[i - 1][t - 1] * 60.0 / velo;
 }
 void insere(int i, int j, double c)
 {

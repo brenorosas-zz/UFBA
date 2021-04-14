@@ -45,9 +45,9 @@ vector<int> A_star()
         int v;
         for (auto &i : q)
         {
-            if (h[i] < menor)
+            if (score[i] < menor)
             {
-                menor = h[i];
+                menor = score[i];
                 v = i;
             }
         }
