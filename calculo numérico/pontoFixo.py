@@ -5,11 +5,10 @@ def f(x):
 def phi(x):
     return (x+1)**(1/3)
 
-a, b = [float(x) for x in input().split(' ')]
+x = float(input())
 #Chute inicial = valor médio
 precisao = input()
 precisao = float(precisao)
-x = 1
 it = 0
 if abs(f(x)) < precisao:
     print("Raiz aproximada = {}".format(x))

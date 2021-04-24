@@ -4,11 +4,9 @@ def f(x):
 def att(xa, xb):
     return xb - (f(xb)*(xb - xa))/(f(xb) - f(xa))
 
-a, b = [float(x) for x in input().split(' ')]
+xa, xb = [float(x) for x in input().split(' ')]
 precisao = input()
 precisao = float(precisao)
-xa = 0
-xb = 0.5
 it = 0
 if abs(f(xa)) < precisao:
     print("Raiz aproximada = {}".format(xa))
