@@ -17,18 +17,20 @@ if b - a < precisao:
     print("Raiz aproximada = {}".format((a + b)/2))
 else:
     it = 1
+    ant = 1
     while True:
         x = (a+b)/2
         # print("$a = {}$, $b = {}$, $\overline(x) = {}$, $f(\overline(x)) = {}$".format(a, b, m, f(m)))
         if abs(f(x)) < precisao:
             print("{:.10f}".format(f(x)))
             print("Raiz aproximada = {}".format(x))
-            erro = abs(1.3247179572447 - x)
-            print("Erro: {:.10f}".format(erro))
+            ans = abs((f(ant) - f(x))/f(x))
+            print("Erro em x = {:.10f}".format(ans))
             break
         if same_signal(f(x), f(a)):
             a = x
         else:
             b = x
+        ant = x
         it += 1
 print(it, "iterações")

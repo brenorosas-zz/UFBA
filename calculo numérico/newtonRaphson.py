@@ -18,14 +18,17 @@ if abs(f(x)) < precisao:
     print("Raiz aproximada = {}".format(x))
 else:
     it = 1
+    ant = 1
     while True:
         x = att(x)
+        print(x)
         if abs(f(x)) < precisao:
             print("{:.10f}".format(f(x)))
             print("Raiz aproximada = {}".format(x))
-            erro = abs(1.3247179572447 - x)
-            print("Erro: {:.10f}".format(erro))
+            ans = abs((f(ant) - f(x))/f(x))
+            print("Erro em x = {:.10f}".format(ans))
             break
+        ant = x
         it += 1
 print(it, "iterações")
     
