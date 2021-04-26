@@ -22,12 +22,16 @@ else:
     ant = 1
     while True:
         x = (a*f(b) - b*f(a))/(f(b) - f(a))
-        # print("$a = {}$, f(a) = {}, $b = {}$, f(b) = {}, $\overline(x) = {}$, $f(\overline(x)) = {}$".format(a, f(a), b, f(b), m, f(m)))
+        print(f(a), f(b), f(x))
+        print("$a = {:.9f}$, $b = {:.9f}$, $X_{}{}{} = {:.9f}$, $f(X_{}{}{}) = {:.9f}$".format(a, b,'{', it, '}', x, '{', it, '}', f(x)))
+        print()
         if abs(f(x)) < precisao:
-            print("{:.10f}".format(f(x)))
-            print("Raiz aproximada = {}".format(x))
+            print("$\overline{}X{} = {}$".format('{', '}', x))
+            print()
+            print("$f(\overline{}X{}) = {:.10f}$".format('{', '}', f(x)))
+            print()
             ans = abs((f(ant) - f(x))/f(x))
-            print("Erro em x = {:.10f}".format(ans))
+            print("Erro em $x = {:.10f}$".format(ans))
             break
         if same_signal(f(x), f(a)):
             a = x
@@ -35,4 +39,5 @@ else:
             b = x
         ant = x
         it = it + 1
+print()
 print(it, "iterações")

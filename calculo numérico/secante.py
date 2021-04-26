@@ -15,16 +15,25 @@ elif abs(f(xb)) < precisao:
 else:
     it = 1
     ant = 1
+    print("$X_0 = {:.10f}$, $f(X_0) = {:.10f}$".format(xa, f(xa)))
+    print()
+    print("$X_1 = {:.10f}$, $f(X_1) = {:.10f}$".format(xb, f(xb)))
+    print()
     while(True):
         x = att(xa, xb)
+        print("$X_{}{}{} = {:.10f}$, $f(X_{}{}{}) = {:.10f}$".format('{', it+1, '}', x, '{', it+1, '}', f(x)))
+        print()
         if abs(f(x)) < precisao:
-            print("{:.10f}".format(f(x)))
-            print("Raiz aproximada = {}".format(x))
+            print("$\overline{}X{} = {}$".format('{', '}', x))
+            print()
+            print("$f(\overline{}X{}) = {:.10f}$".format('{', '}', f(x)))
+            print()
             ans = abs((f(ant) - f(x))/f(x))
-            print("Erro em x = {:.10f}".format(ans))
+            print("Erro em $x = {:.10f}$".format(ans))
             break
         xa = xb
         xb = x
         ant = x
         it += 1
+print()
 print(it, "iterações")
