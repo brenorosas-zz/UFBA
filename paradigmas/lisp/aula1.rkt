@@ -18,3 +18,21 @@
 
 (define l8 (list 'a b 'c))
   
+(define f1 (lambda (x) (* x x)))
+
+(define f2 (lambda (x y) (+ y (* x x))))
+
+(define f3 (lambda (x y z) (* (+ x y) z)))
+
+(define (lnum? l)
+  (cond
+    [(null? l) #t]
+    [(not (number? (first l))) #f]
+    [else (lnum (rest l))]
+    ))
+
+(define (soma l)
+  (if (null? l)
+      0
+      (+ (first l) (soma (rest l)))
+      ))
