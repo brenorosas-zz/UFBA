@@ -82,10 +82,12 @@ bool ok(vector<double> &x, vector<double>&newx, double epsilon){
     return maior / maiornew < epsilon;
 }
 
-vector<double> gaus_jacobi(vector<vector<double> >&A, vector<double> &b, int n, double epsilon){
+vector<double> gauss_jacobi(vector<vector<double> >&A, vector<double> &b, int n, double epsilon){
     vector<double> x = inicial(A, b, n);
     vector<double> newx(n, 0);
+    int it = 0;
     while(true){
+        it++;
         for(int i = 0; i < n; i++){
             newx[i] = b[i];
             for(int j = 0; j < n; j++){
@@ -98,13 +100,16 @@ vector<double> gaus_jacobi(vector<vector<double> >&A, vector<double> &b, int n, 
         x = newx;
         if(acabou) break;
     }
+    cout << it << " iterações com o método gauss-jacobi" << endl;
     return x;
 }
 
-vector<double> gaus_seidei(vector<vector<double> >&A, vector<double> &b, int n, double epsilon){
+vector<double> gauss_seidel(vector<vector<double> >&A, vector<double> &b, int n, double epsilon){
     vector<double> x = inicial(A, b, n);
     vector<double> newx(n, 0);
+    int it = 0;
     while(true){
+        it ++;
         for(int i = 0; i < n; i++){
             newx[i] = b[i];
             for(int j = 0; j < n; j++){
@@ -120,6 +125,7 @@ vector<double> gaus_seidei(vector<vector<double> >&A, vector<double> &b, int n, 
         x = newx;
         if(acabou) break;
     }
+    cout << it << " iterações com método gauss_seidel" << endl;
     return x;
 }
 
@@ -130,15 +136,15 @@ int32_t main(){
     vector<vector<double> > A;
     vector<double> b;
     ler_matriz(A, n, b);
-    vector<double> gausJacobi = gaus_jacobi(A, b, n, epsilon);
-    vector<double> gausSeidei = gaus_seidei(A, b, n, epsilon);
-    cout << "Resposta com método Gaus-Jacobi" << endl;
+    vector<double> gaussJacobi = gauss_jacobi(A, b, n, epsilon);
+    vector<double> gaussseidel = gauss_seidel(A, b, n, epsilon);
+    cout << "Resposta com método Gauss-Jacobi" << endl;
     for(int i = 0; i < n; i++){
-        cout << "x" << i+1 << " = " << gausJacobi[i] << endl;;
+        cout << "x" << i+1 << " = " << gaussJacobi[i] << endl;;
     }
-    cout << "Resposta com método de Gaus-Seidei" << endl;
+    cout << "Resposta com método de Gauss-seidel" << endl;
     for(int i = 0; i < n; i++){
-        cout << "x" << i+1 << " = " << gausSeidei[i] << endl;;
+        cout << "x" << i+1 << " = " << gaussseidel[i] << endl;;
     }
     if(criterio_linha(A) or criterio_coluna(A) or criterio_sassenfield(A)){
         cout << "O sistema linear possui convergência assegurada" << endl;
