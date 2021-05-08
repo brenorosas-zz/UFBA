@@ -7,7 +7,7 @@ using namespace std;
 bool criterio_linha(vector<vector<double> > &A){
     int n = A.size();
     for(int i = 0; i < n; i++){
-        double sum = -2*abs(A[i][i]);
+        double sum = -2 * abs(A[i][i]);
         for(int j = 0; j < n; j++){
             sum += abs(A[i][j]);
         }
@@ -15,10 +15,11 @@ bool criterio_linha(vector<vector<double> > &A){
     }
     return true;
 }
+
 bool criterio_coluna(vector<vector<double> > &A){
     int n = A.size();
     for(int i = 0; i < n; i++){
-        double sum = -2*abs(A[i][i]);
+        double sum = -2 * abs(A[i][i]);
         for(int j = 0; j < n; j++){
             sum += abs(A[j][i]);
         }
@@ -26,6 +27,7 @@ bool criterio_coluna(vector<vector<double> > &A){
     }
     return true;
 }
+
 bool criterio_sassenfield(vector<vector<double> >&A){
     int n = A.size();
     vector<double> beta(n);
@@ -37,15 +39,16 @@ bool criterio_sassenfield(vector<vector<double> >&A){
             if(j > i)
                 val += abs(A[i][j]);
             else
-                val += beta[j]*abs(A[i][j]);
+                val += beta[j] * abs(A[i][j]);
         }
-        val/=abs(A[i][i]);
+        val /= abs(A[i][i]);
         beta[i] = val;
         maior = max(maior, beta[i]);
     }
     if(maior < 1) return true;
     return false;
 }
+
 void ler_matriz(vector<vector<double> >&A, int n, vector<double> &b){
     for(int i = 0; i < n; i++){
         vector<double> linha;
@@ -60,13 +63,15 @@ void ler_matriz(vector<vector<double> >&A, int n, vector<double> &b){
         A.push_back(linha);
     }
 }
+
 vector<double> inicial(vector<vector<double> >&A, vector<double> &b, int n){
     vector<double> x(n);
     for(int i = 0; i < n; i++){
-        x[i] = b[i]/A[i][i];
+        x[i] = b[i] / A[i][i];
     }
     return x;
 }
+
 bool ok(vector<double> &x, vector<double>&newx, double epsilon){
     double maior = 0;
     double maiornew = 0;
@@ -74,8 +79,9 @@ bool ok(vector<double> &x, vector<double>&newx, double epsilon){
         maior = max(maior, abs(newx[i] - x[i]));
         maiornew = max(maiornew, abs(newx[i]));
     }
-    return maior/maiornew < epsilon;
+    return maior / maiornew < epsilon;
 }
+
 vector<double> gaus_jacobi(vector<vector<double> >&A, vector<double> &b, int n, double epsilon){
     vector<double> x = inicial(A, b, n);
     vector<double> newx(n, 0);
@@ -86,7 +92,7 @@ vector<double> gaus_jacobi(vector<vector<double> >&A, vector<double> &b, int n, 
                 if(i == j) continue;
                 newx[i] -= A[i][j] * x[j];
             }
-            newx[i]/=A[i][i];
+            newx[i] /= A[i][i];
         }
         bool acabou = ok(x, newx, epsilon);
         x = newx;
@@ -94,6 +100,7 @@ vector<double> gaus_jacobi(vector<vector<double> >&A, vector<double> &b, int n, 
     }
     return x;
 }
+
 vector<double> gaus_seidei(vector<vector<double> >&A, vector<double> &b, int n, double epsilon){
     vector<double> x = inicial(A, b, n);
     vector<double> newx(n, 0);
@@ -107,7 +114,7 @@ vector<double> gaus_seidei(vector<vector<double> >&A, vector<double> &b, int n, 
                 else
                     newx[i] -= A[i][j] * x[j];
             }
-            newx[i]/=A[i][i];
+            newx[i] /= A[i][i];
         }
         bool acabou = ok(x, newx, epsilon);
         x = newx;
@@ -115,6 +122,7 @@ vector<double> gaus_seidei(vector<vector<double> >&A, vector<double> &b, int n, 
     }
     return x;
 }
+
 int32_t main(){
     int n;
     double epsilon;
@@ -122,17 +130,18 @@ int32_t main(){
     vector<vector<double> > A;
     vector<double> b;
     ler_matriz(A, n, b);
+    vector<double> gausJacobi = gaus_jacobi(A, b, n, epsilon);
+    vector<double> gausSeidei = gaus_seidei(A, b, n, epsilon);
+    cout << "Resposta com método Gaus-Jacobi" << endl;
+    for(int i = 0; i < n; i++){
+        cout << "x" << i+1 << " = " << gausJacobi[i] << endl;;
+    }
+    cout << "Resposta com método de Gaus-Seidei" << endl;
+    for(int i = 0; i < n; i++){
+        cout << "x" << i+1 << " = " << gausSeidei[i] << endl;;
+    }
     if(criterio_linha(A) or criterio_coluna(A) or criterio_sassenfield(A)){
-        vector<double> gausJacobi = gaus_jacobi(A, b, n, epsilon);
-        vector<double> gausSeidei = gaus_seidei(A, b, n, epsilon);
-        cout << "Resposta com método Gaus-Jacobi" << endl;
-        for(int i = 0; i < n; i++){
-            cout << "x" << i+1 << " = " << gausJacobi[i] << endl;;
-        }
-        cout << "Resposta com método de Gaus-Seidei" << endl;
-        for(int i = 0; i < n; i++){
-            cout << "x" << i+1 << " = " << gausSeidei[i] << endl;;
-        }
+        cout << "O sistema linear possui convergência assegurada" << endl;
     }
     else{
         cout << "O sistema linear não possui convergência assegurada." << endl;
