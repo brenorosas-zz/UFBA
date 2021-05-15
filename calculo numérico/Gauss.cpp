@@ -28,7 +28,7 @@ bool criterio_coluna(vector<vector<double> > &A){
     return true;
 }
 
-bool criterio_sassenfield(vector<vector<double> >&A){
+bool criterio_sasenfeld(vector<vector<double> >&A){
     int n = A.size();
     vector<double> beta(n);
     double maior = 0;
@@ -146,10 +146,13 @@ int32_t main(){
     for(int i = 0; i < n; i++){
         cout << "x" << i+1 << " = " << gaussseidel[i] << endl;;
     }
-    if(criterio_linha(A) or criterio_coluna(A) or criterio_sassenfield(A)){
-        cout << "O sistema linear possui convergência assegurada" << endl;
+    if(criterio_linha(A) or criterio_coluna(A)){
+        cout << "O sistema linear possui convergência assegurada tanto para o método de Gauss-Jacobi quanto para o de Gauss-Seidel" << endl;
+    }
+    else if(criterio_sasenfeld(A)){
+        cout << "O sistema linear possui convergência assegurada para o método Gauss-Seidel." << endl;
     }
     else{
-        cout << "O sistema linear não possui convergência assegurada." << endl;
+        cout << "O sistema linear não possui convergência assegurada para nenhum método" << endl;
     }
 }
