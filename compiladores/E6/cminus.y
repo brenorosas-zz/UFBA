@@ -14,7 +14,9 @@ void yyerror(char *s, ...);
 %token ID
 %token ELSE 
 %token IF 
+%token INTCONST
 %token INT 
+%token ENUM
 %token RETURN 
 %token VOID 
 %token WHILE
@@ -28,6 +30,9 @@ void yyerror(char *s, ...);
 
 %nonassoc EQ
 %nonassoc NEQ
+%nonassoc NOT
+%nonassoc AND
+%nonassoc OR
 %nonassoc LT
 %nonassoc GT
 %nonassoc LTEQ
@@ -48,19 +53,31 @@ declaration-list:
 declaration:
   var-declaration 
 | fun-declaration  
+| type-declaration
 ;
 
 var-declaration: 
   type-specifier ID ';'
 | type-specifier ID '[' NUM ']' ';'
+| type-declaration ID ';'
 ;
 
 fun-declaration: 
   type-specifier ID '(' params ')' compound-stmt
 ;
 
+type-declaration:
+  type-specifier '{' const-list '}' ';'
+;
+
+const-list:
+  const-list ',' ID  
+| ID
+;
+
 type-specifier: 
   INT  
+| ENUM ID
 | VOID 
 ;
 
@@ -121,7 +138,7 @@ return-stmt: RETURN ';'
 
 expression: 
   var '=' expression
-| simple-expression
+| compost-expression
 ;
 
 var:  
@@ -132,15 +149,25 @@ var:
 simple-expression:
   additive-expression relop additive-expression 
 | additive-expression
+| NOT additive-expression
+;
+compost-expression:
+  simple-expression relop2 simple-expression
+| simple-expression
+| NOT simple-expression
 ;
 
 relop: LTEQ | LT | GT | GTEQ | EQ | NEQ
+;
+relop2: AND | OR
 ;
 
 additive-expression: 
   term
 | additive-expression '+' term
 | additive-expression '-' term
+| additive-expression "++"
+| additive-expression "--"
 ;
 
 term: 

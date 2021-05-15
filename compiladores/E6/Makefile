@@ -4,7 +4,7 @@ YACC = bison
 CFLAGS = -DYYDEBUG=1 
 
 cminus : cminus.tab.o lex.yy.o compiler.o
-	${CC} -o cminus cminus.tab.o lex.yy.o compiler.o -ly
+	${CC} -o cminus cminus.tab.o lex.yy.o compiler.o
     
 cminus.tab.c cminus.tab.h : cminus.y
 	${YACC} -vd cminus.y

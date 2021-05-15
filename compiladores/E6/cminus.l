@@ -13,7 +13,9 @@ void yyerror(char *s, ...);
 
 "else"   { return ELSE; }
 "if"     { return IF; }
+"int const" { return INTCONST; }
 "int"    { return INT; }
+"enum" { return ENUM; }
 "return" { return RETURN; }
 "void"   { return VOID; }
 "while"  { return WHILE; }
@@ -25,6 +27,9 @@ void yyerror(char *s, ...);
 ">=" 	{ return GTEQ; }
 "<"		{ return LT; }
 ">"		{ return GT; }
+"!"     { return NOT; }
+"&&"    { return AND; }
+"||"    { return OR; }
 "="     { return yytext[0]; }
 ","     { return yytext[0]; }
 ";" 	{ return yytext[0]; }
@@ -34,7 +39,9 @@ void yyerror(char *s, ...);
 "}" 	{ return yytext[0]; }
 "["     { return yytext[0]; }
 "]"     { return yytext[0]; }
+"++"    { return yytext[0]; }
 "+" 	{ return yytext[0]; }
+"--"    { return yytext[0]; }
 "-" 	{ return yytext[0]; }
 "*"     { return yytext[0]; }
 "/"     { return yytext[0]; }
