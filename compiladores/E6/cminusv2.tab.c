@@ -66,7 +66,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "cminus.y"
+#line 1 "cminusv2.y"
 
 /* includes, C defs */
 
@@ -76,7 +76,7 @@
 int yylex();
 void yyerror(char *s, ...);
 
-#line 80 "cminus.tab.c"
+#line 80 "cminusv2.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -109,8 +109,8 @@ void yyerror(char *s, ...);
 
 /* Use api.header.include to #include this header
    instead of duplicating it here.  */
-#ifndef YY_YY_CMINUS_TAB_H_INCLUDED
-# define YY_YY_CMINUS_TAB_H_INCLUDED
+#ifndef YY_YY_CMINUSV2_TAB_H_INCLUDED
+# define YY_YY_CMINUSV2_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -159,7 +159,7 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_CMINUS_TAB_H_INCLUDED  */
+#endif /* !YY_YY_CMINUSV2_TAB_H_INCLUDED  */
 
 
 
@@ -1415,7 +1415,7 @@ yyreduce:
   switch (yyn)
     {
 
-#line 1419 "cminus.tab.c"
+#line 1419 "cminusv2.tab.c"
 
       default: break;
     }
@@ -1647,7 +1647,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 200 "cminus.y"
+#line 200 "cminusv2.y"
 
 
 

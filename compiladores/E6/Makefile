@@ -3,13 +3,13 @@ LEX = flex
 YACC = bison
 CFLAGS = -DYYDEBUG=1 
 
-cminus : cminus.tab.o lex.yy.o compiler.o
-	${CC} -o cminus cminus.tab.o lex.yy.o compiler.o
+cminusv2 : cminusv2.tab.o lex.yy.o compiler.o
+	${CC} -o cminusv2 cminusv2.tab.o lex.yy.o compiler.o
     
-cminus.tab.c cminus.tab.h : cminus.y
-	${YACC} -vd cminus.y
+cminusv2.tab.c cminusv2.tab.h : cminusv2.y
+	${YACC} -vd cminusv2.y
 
-lex.yy.c : cminus.l
+lex.yy.c : cminusv2.l
 	${LEX} $<
 
 .SUFFIXES: .l .y .c
