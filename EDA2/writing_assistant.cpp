@@ -195,6 +195,40 @@ void addFrequence(string ult, string s) {
 
 struct stat st = {0};
 
+void merge(vector<pair<string, int>> &vet, pair<string, int> si) {
+  for (auto &i : vet) {
+    if (si.second > i.second) {
+      swap(si, i);
+    }
+  }
+  if (vet.size() < 3) {
+    vet.push_back(si);
+  }
+}
+
+void Correction(Trie &root, vector<pair<string, int>> &ans, string s, int v = 0,
+                int vs = 0, bool fail = false, string t = "") {
+  if (vs == s.size()) {
+    if (root[v].end) {
+      merge(ans, make_pair(t, root[v].frequence));
+    }
+    return;
+  }
+  int x = s[vs] - 'a';
+  if (!fail) {
+    for (int i = 0; i < 26; i++) {
+      if (root[v].children[i] != -1) {
+        Correction(root, ans, s, root[v].children[i], vs + 1, (i != x),
+                   t + (char)('a' + i));
+      }
+    }
+  } else {
+    if (root[v].children[x] != -1) {
+      Correction(root, ans, s, root[v].children[x], vs + 1, fail, t + s[vs]);
+    }
+  }
+}
+
 int main() {
   Trie root;
 
@@ -218,7 +252,7 @@ int main() {
         Insert(root, s, false);
       }
     } else if (operation == 'd') {
-      string s;
+      string s, t;
       cin >> s;
 
       if (Consult(root, s)) {
@@ -235,7 +269,21 @@ int main() {
         ult = s;
         Insert(root, s, true);
       } else {
-        cout << "palavra desconhecida - possiveis correcoes:" << endl;
+        cout << "here" << endl;
+        vector<pair<string, int>> ans;
+        Correction(root, ans, s);
+        cout << "palavra desconhecida - possiveis correcoes:";
+        for (auto &i : ans) {
+          cout << ' ' << i.first;
+        }
+        cout << endl;
+        cin >> t;
+        Insert(root, t, true);
+        if (ff == false) {
+          addFrequence(ult, t);
+        }
+        ff = false;
+        ult = t;
       }
     } else if (operation == 'f') {
       printOut(root);
