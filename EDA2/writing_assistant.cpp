@@ -116,7 +116,7 @@ bool Consult(Trie &root, string s) {
     }
     v = root[v].children[x];
   }
-  return true;
+  return root[v].end;
 }
 
 void Insert(vector<WordFrequence> &ans, WordFrequence r) {
@@ -129,6 +129,7 @@ void Insert(vector<WordFrequence> &ans, WordFrequence r) {
     ans.push_back(r);
   }
 }
+
 vector<WordFrequence> Take(string s) {
   FILE *fileWord;
   s = s + ".dat";
@@ -151,18 +152,18 @@ vector<WordFrequence> Take(string s) {
   return ans;
 }
 
-void printOut(Trie &root, string s = "", int v = 0) {
+void PrintOut(Trie &root, string s = "", int v = 0) {
   if (root[v].end) {
     cout << s << ' ' << root[v].frequence << endl;
   }
   for (int i = 0; i < 26; i++) {
     if (root[v].children[i] == -1)
       continue;
-    printOut(root, s + (char)('a' + i), root[v].children[i]);
+    PrintOut(root, s + (char)('a' + i), root[v].children[i]);
   }
 }
 
-void addFrequence(string ult, string s) {
+void AddFrequence(string ult, string s) {
   FILE *fileWord;
   char fileName[40] = "map/";
   for (int i = 0; i < ult.size(); i++) {
@@ -195,7 +196,7 @@ void addFrequence(string ult, string s) {
 
 struct stat st = {0};
 
-void merge(vector<pair<string, int>> &vet, pair<string, int> si) {
+void Merge(vector<pair<string, int>> &vet, pair<string, int> si) {
   for (auto &i : vet) {
     if (si.second > i.second) {
       swap(si, i);
@@ -210,7 +211,7 @@ void Correction(Trie &root, vector<pair<string, int>> &ans, string s, int v = 0,
                 int vs = 0, bool fail = false, string t = "") {
   if (vs == s.size()) {
     if (root[v].end) {
-      merge(ans, make_pair(t, root[v].frequence));
+      Merge(ans, make_pair(t, root[v].frequence));
     }
     return;
   }
@@ -263,7 +264,7 @@ int main() {
         }
         cout << endl;
         if (ff == false) {
-          addFrequence(ult, s);
+          AddFrequence(ult, s);
         }
         ff = false;
         ult = s;
@@ -280,16 +281,18 @@ int main() {
         cin >> t;
         Insert(root, t, true);
         if (ff == false) {
-          addFrequence(ult, t);
+          AddFrequence(ult, t);
         }
         ff = false;
         ult = t;
       }
     } else if (operation == 'f') {
-      printOut(root);
+      PrintOut(root);
     } else if (operation == 'p') {
       string s;
       cin >> s;
+      if (!Consult(root, s))
+        continue;
       vector<WordFrequence> nextWords = Take(s);
       for (auto &word : nextWords) {
         cout << word.word << ' ' << word.frequence << endl;
