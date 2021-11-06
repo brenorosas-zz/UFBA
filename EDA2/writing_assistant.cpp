@@ -270,7 +270,6 @@ int main() {
         ult = s;
         Insert(root, s, true);
       } else {
-        cout << "here" << endl;
         vector<pair<string, int>> ans;
         Correction(root, ans, s);
         cout << "palavra desconhecida - possiveis correcoes:";
