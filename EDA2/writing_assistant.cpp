@@ -257,12 +257,6 @@ int main() {
       cin >> s;
 
       if (Consult(root, s)) {
-        vector<WordFrequence> nextWords = Take(s);
-        cout << "proximas palavras:";
-        for (auto &word : nextWords) {
-          cout << ' ' << word.word;
-        }
-        cout << endl;
         if (ff == false) {
           AddFrequence(ult, s);
         }
@@ -278,6 +272,14 @@ int main() {
         }
         cout << endl;
         cin >> t;
+        if(Consult(root, t)){
+          vector<WordFrequence> nextWords = Take(t);
+          cout << "proximas palavras:";
+          for (auto &word : nextWords) {
+            cout << ' ' << word.word;
+          }
+          cout << endl;
+        }
         Insert(root, t, true);
         if (ff == false) {
           AddFrequence(ult, t);
